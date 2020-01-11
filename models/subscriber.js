@@ -1,8 +1,9 @@
 const mongoose = require("mongoose");
+const cardSchema = require("./card");
 
 const subscriberSchema = new mongoose.Schema({
 	usrId: {
-		type: String,
+		type: mongoose.Schema.Types.ObjectId,
 		required: true
 	},
 
@@ -22,12 +23,6 @@ const subscriberSchema = new mongoose.Schema({
 		unique: true,
 		lowercase: true
 	},
-
-	Catalog: {
-		type: Array
-		
-	},
-
 	theme: {
 		type: String,
 		required: false,

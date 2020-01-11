@@ -2,10 +2,6 @@ GET http://localhost:1125/subscribers
 
 ###
 
-GET http://localhost:1125/subscribers
-
-###
-
 POST http://localhost:1125/subscribers
 Content-Type: application/json
 
