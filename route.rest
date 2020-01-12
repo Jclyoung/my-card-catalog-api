@@ -1,15 +1,15 @@
-GET http://localhost:1125/subscribers
+GET http://localhost:1125/users
 
 ###
 
-POST http://localhost:1125/subscribers
+POST http://localhost:1125/users
 Content-Type: application/json
 
 ###
 
-DELETE http://localhost:1125/subscribers
+DELETE http://localhost:1125/users
 
 ###
 
-PATCH http://localhost:1125/subscribers
+PATCH http://localhost:1125/users
 Content-Type: application/json

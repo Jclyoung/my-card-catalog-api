@@ -1,32 +1,32 @@
 const express = require("express");
 const router = express.Router();
-const Subscriber = require("../models/subscriber");
+const User = require("../models/user");
 
 // Getting all
 router.get("/", async (req, res) => {
 	try {
-		const subscribers = await Subscriber.find();
-		res.json(subscribers);
+		const users = await User.find();
+		res.json(users);
 	} catch (err) {
 		// 500 something wrong with server
 		res.status(500).json({ message: err.message });
 	}
 });
 // Getting one
-router.get("/:id", getSubscriber, (req, res) => {
-	res.send(res.subscriber);
+router.get("/:id", getUser, (req, res) => {
+	res.send(res.user);
 });
 
 // Creating one
 router.post("/", async (req, res) => {
-	const subscriber = new Subscriber({
+	const user = new User({
 		name: req.body.name,
 		displayName: req.body.displayName,
 		email: req.body.email
 	});
 	try {
-		const newSubscriber = await subscriber.save();
-		res.json(newSubscriber);
+		const newUser = await user.save();
+		res.json(newUser);
 	} catch (err) {
 		//400 bad data from user
 		res.status(400).json({ message: err.message });
@@ -34,19 +34,19 @@ router.post("/", async (req, res) => {
 });
 
 // Updating one
-router.patch("/:id", getSubscriber, async (req, res) => {
+router.patch("/:id", getUser, async (req, res) => {
 	if (req.body.name != null) {
-		res.subscriber.name = req.body.name;
+		res.user.name = req.body.name;
 	}
 	if (req.body.displayName != null) {
-		req.subscriber.displayName = req.body.displayName;
+		req.user.displayName = req.body.displayName;
 	}
 	if (req.body.email != null) {
-		req.subscriber.email = req.body.email;
+		req.user.email = req.body.email;
 	}
 	try {
-		await res.subscriber.save();
-		res.json("updatedSubscriber");
+		await res.user.save();
+		res.json("updatedUser");
 	} catch (err) {
 		res.status(400).json({ message: err.message });
 	}
@@ -55,24 +55,24 @@ router.patch("/:id", getSubscriber, async (req, res) => {
 // Deleting one
 router.delete("/:id", async (req, res) => {
 	try {
-		await res.subscriber.remove();
-		res.json("Deleted subscriber");
+		await res.user.remove();
+		res.json("Deleted user");
 	} catch (err) {
 		res.status(500).json({ message: err.message });
 	}
 });
 
-async function getSubscriber(req, res, next) {
+async function getUser(req, res, next) {
 	try {
-		subscriber = await subscriber.findById(req.params.id);
-		if (subscriber == null) {
-			return res.status(404).json({ message: "Cannot find subscriber" });
+		user = await user.findById(req.params.id);
+		if (user == null) {
+			return res.status(404).json({ message: "Cannot find user" });
 		}
 	} catch (err) {
 		res.status(500).json({ message: err.message });
 	}
 
-	res.subscriber = subscriber;
+	res.user = user;
 	next();
 }
 
