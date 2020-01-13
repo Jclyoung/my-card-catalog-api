@@ -3,7 +3,7 @@ const router = express.Router();
 const Card = require("../models/card");
 
 // Getting all
-router.get("/", async (req, res) => {
+router.get("/:userId", async (req, res) => {
 	try {
 		const cards = await Card.find();
 		res.json(cards);
@@ -12,14 +12,11 @@ router.get("/", async (req, res) => {
 		res.status(500).json({ message: err.message });
 	}
 });
-// Getting one
-router.get("/:id", getCard, (req, res) => {
-	res.send(res.card);
-});
 
 // Creating one
-router.post("/", async (req, res) => {
+router.post("/:userId", async (req, res) => {
 	const card = new Card({
+		userId: req.body.userId,
 		name: req.body.name,
 		type: req.body.type,
 		sport: req.body.sport,
@@ -47,7 +44,7 @@ router.post("/", async (req, res) => {
 });
 
 // Updating one
-router.patch("/:id", getCard, async (req, res) => {
+router.patch("/:id/:id", getCard, async (req, res) => {
 	if (req.body.name != null) {
 		res.card.name = req.body.name;
 	}
@@ -106,7 +103,7 @@ router.patch("/:id", getCard, async (req, res) => {
 });
 
 // Deleting one
-router.delete("/:id", async (req, res) => {
+router.delete("/:id/:id", async (req, res) => {
 	try {
 		await res.card.remove();
 		res.json("Deleted card");

@@ -1,15 +1,42 @@
-GET http://localhost:1125/subscribers
+GET http://localhost:1125/users
 
 ###
 
-POST http://localhost:1125/subscribers
+POST http://localhost:1125/users
 Content-Type: application/json
 
 ###
 
-DELETE http://localhost:1125/subscribers
+DELETE http://localhost:1125/users
 
 ###
 
-PATCH http://localhost:1125/subscribers
+PATCH http://localhost:1125/users
+Content-Type: application/json
+
+###
+
+GET http://localhost:1125/cards/5e1cc108e02e21d9ce8544e7
+
+###
+
+POST http://localhost:1125/cards
+Content-Type: application/json
+
+{
+  "userId": "5e1cc108e02e21d9ce8544e7",
+  "name": "test1",
+  "type": "test1",
+  "sport": "test1",
+  "team": "test1",
+  "location": "test1"
+}
+
+###
+
+DELETE http://localhost:1125/cards
+
+###
+
+PATCH http://localhost:1125/cards
 Content-Type: application/json

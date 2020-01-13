@@ -1,12 +1,7 @@
 const mongoose = require("mongoose");
 const cardSchema = require("./card");
 
-const subscriberSchema = new mongoose.Schema({
-	usrId: {
-		type: mongoose.Schema.Types.ObjectId,
-		required: true
-	},
-
+const userSchema = new mongoose.Schema({
 	name: {
 		type: String,
 		required: true
@@ -30,4 +25,4 @@ const subscriberSchema = new mongoose.Schema({
 	}
 });
 
-module.exports = mongoose.model("Subscriber", subscriberSchema);
+module.exports = mongoose.model("User", userSchema);
