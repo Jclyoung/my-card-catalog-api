@@ -18,6 +18,15 @@ const userSchema = new mongoose.Schema({
 		unique: true,
 		lowercase: true
 	},
+
+	bio: {
+		type: String
+	},
+	
+	motto: {
+		type: String
+	},
+
 	theme: {
 		type: String,
 		required: false,

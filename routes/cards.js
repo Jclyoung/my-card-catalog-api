@@ -15,6 +15,7 @@ router.get("/:userId", async (req, res) => {
 
 // Creating one
 router.post("/:userId", async (req, res) => {
+	console.log("hello world");
 	const card = new Card({
 		userId: req.body.userId,
 		name: req.body.name,
@@ -44,7 +45,7 @@ router.post("/:userId", async (req, res) => {
 });
 
 // Updating one
-router.patch("/:id/:id", getCard, async (req, res) => {
+router.patch("/:userId/:id", getCard, async (req, res) => {
 	if (req.body.name != null) {
 		res.card.name = req.body.name;
 	}
@@ -52,10 +53,10 @@ router.patch("/:id/:id", getCard, async (req, res) => {
 		res.card.type = req.body.type;
 	}
 	if (req.body.sport != null) {
-		req.card.sport = req.body.sport;
+		res.card.sport = req.body.sport;
 	}
 	if (req.body.team != null) {
-		req.card.team = req.body.team;
+		res.card.team = req.body.team;
 	}
 	if (req.body.location != null) {
 		res.card.location = req.body.location;
@@ -67,28 +68,28 @@ router.patch("/:id/:id", getCard, async (req, res) => {
 		res.card.playerYear = req.body.playerYear;
 	}
 	if (req.body.manufacturer != null) {
-		req.card.manufacturer = req.body.manufacturer;
+		res.card.manufacturer = req.body.manufacturer;
 	}
 	if (req.body.original != null) {
-		req.card.original = req.body.original;
+		res.card.original = req.body.original;
 	}
 	if (req.body.psa != null) {
 		res.card.psa = req.body.psa;
 	}
 	if (req.body.condition != null) {
-		req.card.condition = req.body.condition;
+		res.card.condition = req.body.condition;
 	}
 	if (req.body.era != null) {
-		req.card.era = req.body.era;
+		res.card.era = req.body.era;
 	}
 	if (req.body.graded != null) {
 		res.card.graded = req.body.graded;
 	}
 	if (req.body.grades != null) {
-		req.card.grades = req.body.grades;
+		res.card.grades = req.body.grades;
 	}
 	if (req.body.notes != null) {
-		req.card.notes = req.body.notes;
+		res.card.notes = req.body.notes;
 	}
 	if (req.body.description != null) {
 		res.card.description = req.body.description;
