@@ -1,27 +1,27 @@
-GET https://localhost:1125/users
+GET http://localhost:1125/users
 
 ###
 
-POST https://localhost:1125/users
+POST http://localhost:1125/users
 Content-Type: application/json
 
 ###
 
-DELETE https://localhost:1125/users
+DELETE http://localhost:1125/users
 
 ###
 
-PATCH https://localhost:1125/users
+PATCH http://localhost:1125/users
 Content-Type: application/json
 
 ###
 
-GET https://localhost:1125/cards
+GET http://localhost:1125/cards
 
 // 5e1cc108e02e21d9ce8544e7
 ###
 
-POST https://localhost:1125/cards
+POST http://localhost:1125/cards
 Content-Type: application/json
 
 # {
@@ -37,9 +37,9 @@ Content-Type: application/json
 
 ###
 
-DELETE https://localhost:1125/cards
+DELETE http://localhost:1125/cards
 
 ###
 
-PATCH https//localhost:1125/cards
+PATCH http//localhost:1125/cards
 Content-Type: application/json
