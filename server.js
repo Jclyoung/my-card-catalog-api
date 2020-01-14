@@ -19,7 +19,7 @@ db.on("error", error => console.log(error));
 db.once("open", () => console.log("Connected to Database"));
 
 app.use(express.json());
-app.use(cors({ origin: "https://localhost:3000" }));
+app.use(cors({ origin: "http://localhost:3000" }));
 
 const usersRouter = require("./routes/users");
 app.use("/users", usersRouter);
