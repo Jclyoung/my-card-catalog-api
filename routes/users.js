@@ -27,11 +27,11 @@ router.post("/auth", (req, res) => {
 	// Find user by email
 	User.findOne({ email }).then(user => {
 		// Check if user exists
+		console.log(user);
 		if (!user) {
-			return res.status(404).json({ emailNotFound: "Email not found" });
+			return res.status(408).json({ emailNotFound: "Email not found" });
 		}
 
-		console.log(password, user.password);
 		// Check password
 		const match = bcrypt.compare(password, user.password);
 		if (match) {
@@ -85,18 +85,14 @@ router.post("/registration", async (req, res) => {
 				}
 			});
 		}
-		// Hash password before saving in database
-		bcrypt
-			.genSalt(10)
-			.then(salt => {
-				bcrypt.hash(newUser.password, salt);
-			})
-			.then(hash => {
-				return (newUser.password = hash);
-			});
 
-		const saveUser = newUser.save();
-		res.json(saveUser);
+		// Hash password before saving in database
+		const salt = bcrypt.genSaltSync(12);
+		const hash = bcrypt.hashSync(newUser.password, salt);
+		newUser.password = hash;
+		newUser.save().then(user => {
+			return res.json(user);
+		});
 	});
 });
 
