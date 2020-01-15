@@ -12,17 +12,26 @@ router.get("/", async (req, res) => {
 		res.status(500).json({ message: err.message });
 	}
 });
-// Getting one
-router.get("/:id", getUser, (req, res) => {
+// Temporary Auth
+router.get("/login", getUserByEmail, (req, res) => {
 	res.send(res.user);
 });
+
+// Registration
+
+
+
 
 // Creating one
 router.post("/", async (req, res) => {
 	const user = new User({
 		name: req.body.name,
 		displayName: req.body.displayName,
-		email: req.body.email
+		email: req.body.email,
+		password: req.body.password,
+		theme: req.body.theme,
+		bio: req.body.bio,
+		motto: req.body.motto
 	});
 	try {
 		const newUser = await user.save();
@@ -39,10 +48,22 @@ router.patch("/:id", getUser, async (req, res) => {
 		res.user.name = req.body.name;
 	}
 	if (req.body.displayName != null) {
-		req.user.displayName = req.body.displayName;
+		res.user.displayName = req.body.displayName;
 	}
 	if (req.body.email != null) {
-		req.user.email = req.body.email;
+		res.user.email = req.body.email;
+	}
+	if (req.body.theme != null) {
+		res.user.theme = req.body.theme;
+	}
+	if (req.body.password != null) {
+		res.user.password = req.body.password;
+	}
+	if (req.body.bio != null) {
+		res.user.bio = req.body.bio;
+	}
+	if (req.body.motto != null) {
+		res.user.motto = req.body.motto;
 	}
 	try {
 		await res.user.save();
@@ -53,9 +74,9 @@ router.patch("/:id", getUser, async (req, res) => {
 });
 
 // Deleting one
-router.delete("/:id", async (req, res) => {
+router.delete("/:id", getUser, async (req, res) => {
 	try {
-		await res.user.remove();
+		await res.user.delete();
 		res.json("Deleted user");
 	} catch (err) {
 		res.status(500).json({ message: err.message });
@@ -64,7 +85,21 @@ router.delete("/:id", async (req, res) => {
 
 async function getUser(req, res, next) {
 	try {
-		user = await user.findById(req.params.id);
+		user = await User.findById(req.params.id);
+		if (user == null) {
+			return res.status(404).json({ message: "Cannot find user" });
+		}
+	} catch (err) {
+		res.status(500).json({ message: err.message });
+	}
+
+	res.user = user;
+	next();
+}
+
+async function getUserByEmail(req, res, next) {
+	try {
+		user = await User.findOne({email: req.params.email});
 		if (user == null) {
 			return res.status(404).json({ message: "Cannot find user" });
 		}

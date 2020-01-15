@@ -2,6 +2,7 @@ require("dotenv").config();
 
 const express = require("express"),
 	mongoose = require("mongoose"),
+	bcrypt = require("bcrypt"),
 	cors = require("cors"),
 	app = express(),
 	Port = 1125;
