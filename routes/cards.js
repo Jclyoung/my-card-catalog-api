@@ -6,16 +6,32 @@ const Card = require("../models/card");
 router.get("/:userId", async (req, res) => {
 	try {
 		const cards = await Card.find();
+		console.log(cards);
 		res.json(cards);
 	} catch (err) {
 		// 500 something wrong with server
 		res.status(500).json({ message: err.message });
 	}
 });
-
+// let sport;
+// 	let name;
+// 	let type;
+// 	let location;
+// 	let player;
+// 	let team;
+// 	let era;
+// 	let season;
+// 	let printYear;
+// 	let manufacturer;
+// 	let franchise;
+// 	let original;
+// 	let condition;
+// 	let psa;
+// 	let graded;
+// 	let grade;
+// 	let notes;
 // Creating one
 router.post("/:userId", async (req, res) => {
-	console.log("hello world");
 	const card = new Card({
 		userId: req.body.userId,
 		name: req.body.name,
@@ -45,7 +61,7 @@ router.post("/:userId", async (req, res) => {
 });
 
 // Updating one
-router.patch("/:userId/:id", getCard, async (req, res) => {
+router.patch("/edit", getCard, async (req, res) => {
 	if (req.body.name != null) {
 		res.card.name = req.body.name;
 	}
@@ -104,7 +120,7 @@ router.patch("/:userId/:id", getCard, async (req, res) => {
 });
 
 // Deleting one
-router.delete("/:id/:id", async (req, res) => {
+router.delete("/delete", getCard, async (req, res) => {
 	try {
 		await res.card.remove();
 		res.json("Deleted card");
@@ -126,5 +142,20 @@ async function getCard(req, res, next) {
 	res.card = card;
 	next();
 }
+
+
+
+
+
+
+
+
+// async function getCatalog(req, res, next) {
+// await Cards.find({ userId: req.body.userId }).	res.json(users);
+// } catch (err) {
+// 	// 500 something wrong with server
+// 	res.status(500).json({ message: err.message });
+// }
+// });
 
 module.exports = router;

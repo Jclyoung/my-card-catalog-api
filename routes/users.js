@@ -20,43 +20,52 @@ router.get("/", async (req, res) => {
 // router.get("/login", getUserByEmail, (req, res) => {
 // 	res.send(res.user);
 // });
-router.post("/auth", (req, res) => {
+router.post("/auth", async (req, res) => {
 	const email = req.body.email;
 	const password = req.body.password;
 
 	// Find user by email
 	User.findOne({ email }).then(user => {
 		// Check if user exists
-		console.log(user);
 		if (!user) {
-			return res.status(408).json({ emailNotFound: "Email not found" });
+			return res.status(401).json({ emailNotFound: "Email not found" });
 		}
 
 		// Check password
-		const match = bcrypt.compare(password, user.password);
-		if (match) {
+		async function match() {
+			await bcrypt.compare(password, user.password);
+		}
+		if (match()) {
 			// User matched
 			// Create JWT Payload
 			const payload = {
 				id: user.id,
-				name: user.name
+				name: user.name,
+				displayName: user.displayName,
+				email: user.email,
+				theme: user.theme,
+				bio: user.bio,
+				motto: user.motto
 			};
+
+			return res.status(200).json(payload);
+
 			// Sign token
-			jwt.sign(
-				payload,
-				keys.secretOrKey,
-				{
-					expiresIn: 31556926
-				},
-				(err, token) => {
-					res.json({
-						success: true,
-						token: "Bearer " + token
-					});
-				}
-			);
+			// jwt.sign(
+			// 	payload,
+			// 	keys.secretOrKey,
+			// 	{
+			// 		expiresIn: 1209600
+			// 	},
+			// 	(err, token) => {
+			// 		res.json({
+			// 			success: true,
+			// 			token: "Bearer " + token
+			// 		});
+			// 	}
+			// );
 		} else {
-			return res.status(400).json({ passwordIncorrect: "Password incorrect" });
+			return res.status(400).json({ passwordIncorrect: "Authorization Fail" });
 		}
 	});
 });
@@ -171,7 +180,7 @@ async function getUser(req, res, next) {
 	next();
 }
 
-async function getUserByEmail(req, res, next) {
+async function findBy(req, res, next) {
 	try {
 		user = await User.findOne({ email: req.params.email });
 		if (user == null) {
